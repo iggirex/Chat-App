@@ -1,20 +1,21 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
 
-<div id="chatDiv">Hello</div>
+<div id="userFormArea" class="row">
+    <div class="col-md-12">
+      <form autocomplete="off" id="userForm">Pick username
+        <input id="username" autocomplete="off"/>
+        <input type="submit">Send</input>
+      </form>
+    </div>
+</div>
 
-<ul id="messages"></ul>
+<div id="messageArea">
+  <ul class="list-group" id="users"></ul>
+    <div id="chatDiv">Hello</div>
 
-<form autocomplete="off">
-  <input id="m" autocomplete="off"/>
-  <button>Send</button>
-</form>
-
-<!-- <script>
-var socket = io();
-$('form').submit(function(){
-  socket.emit('chat message', $('#m').val());
-  $('#m').val('');
-  return false;
-});
-</script> -->
+    <form autocomplete="off" id="messageForm">
+      <input id="m" autocomplete="off"/>
+      <input type="submit">Send</input>
+    </form>
+</div>

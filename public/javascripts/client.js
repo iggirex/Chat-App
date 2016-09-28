@@ -1,24 +1,35 @@
 //this command is all it takes to load the io client and connect, io doesn't need a path, it connects to the host serving the page
-
 $(function(){
   var socket = io()
 //if you want jQuery in your file, the entire file has to be wrapped in a jQuery function
 
-console.log("WERE inside Client")
-
-socket.on("initMessageToFront", function(){
-  console.log("Receiving message from back");
-})
-
-socket.on("chat message", function(msg){
-  $("#chatDiv").append($("<p>").text(msg))
-})
-
-$("form").submit(function(){
-  var mess = $("#m").val();
-  $("#chatDiv").append("<p>"+mess+"</p>")
-  socket.emit("chat message", $("#m").val());
+$("#messageForm").submit(function(e){
+  e.preventDefault();
+  // $("#chatDiv").append("<p>"+$("#m").val()+"</p>")
+  socket.emit("send message", $("#m").val());
   $("#m").val("");
-  return false
     })
+
+  socket.on("new message", function(msg){
+      console.log("THIS IS MSG@@@@: ", msg)
+      $("#chatDiv").append($("<div><strong>"+msg.user+"</strong> :"+msg.message+"</p></div>"))
   })
+
+  $("#userForm").submit(function(e){
+    console.log("user form being submitted!!!")
+    e.preventDefault();
+    socket.emit("new user", $("#username").val(), function(data){
+      if(data){
+        $("#userFormArea").hide();
+        $("#messageArea").show();
+      }
+    });
+  })
+    socket.on("get users", function(data){
+      var html = "";
+      for(i=0; i<data.length;i++){
+        html += "<li class=list-group-item>"+data[i]+"</li>"
+      }
+      $("#users").html(html);
+    })
+})

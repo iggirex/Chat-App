@@ -7,12 +7,11 @@ a {
   color: #00B7FF;
 }
 
-div {
-  color: blue;
-  height: 1000px;
-}
-
 #chatDiv {
   background-color: grey;
   height: 300px;
+}
+
+#messageArea {
+  display:none;
 }
